@@ -10,15 +10,10 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
--- Adiciona um sufixo "- 1", "- 2", etc. ao final do nome dos tipos bases repetidos
+-- Remove os tipos de base repetidos, mantendo apenas o registro com menor i_tipos_bases para cada nome
 
-update bethadba.tipos_bases tb
-set nome = nome || ' - ' || rn
-from (
-    select i_tipos_bases,
-           nome,
-           row_number() over (partition by nome order by i_tipos_bases) as rn
+delete from bethadba.tipos_bases
+where i_tipos_bases not in (
+    select min(i_tipos_bases)
     from bethadba.tipos_bases
-) t
-where tb.i_tipos_bases = t.i_tipos_bases
-  and t.rn > 1;
+    group by nome
