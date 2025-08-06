@@ -10,3 +10,7 @@ select i_entidades,
 
 -- CORREÇÃO
 
+update bethadba.parametros_rel
+set sistema_ponto = 4
+where sistema_ponto is null
+  and i_parametros_rel = 2;

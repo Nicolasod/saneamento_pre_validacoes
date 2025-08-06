@@ -14,3 +14,11 @@ select pj.i_entidades,
 
 -- CORREÇÃO
 
+update bethadba.processos_judiciais
+set dt_homologacao = 
+    case 
+        when dt_final < getDate() then dt_final
+        else getDate()
+    end
+where dt_homologacao > getDate()
+   or dt_homologacao > dt_final;

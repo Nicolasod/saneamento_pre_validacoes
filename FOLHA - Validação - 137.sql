@@ -14,7 +14,7 @@ select fpa.i_entidades,
 -- CORREÇÃO
 
 -- Altera o tipo para 'B'
-update funcionarios
+update bethadba.funcionarios
    set tipo_func = 'B'
  where i_entidades = 2
    and i_funcionarios = 938;

@@ -17,3 +17,16 @@ select distinct hf.i_entidades,
 
 -- CORREÇÃO
 
+update bethadba.funcionarios
+set conta_licpremio = 'S'
+where tipo_func = 'F'
+  and conta_licpremio = 'N'
+  and exists (
+      select 1
+        from bethadba.hist_funcionarios as hf
+        join bethadba.vinculos as v
+          on hf.i_vinculos = v.i_vinculos
+       where v.gera_licpremio = 'S'
+         and hf.i_entidades = funcionarios.i_entidades
+         and hf.i_funcionarios = funcionarios.i_funcionarios
+  );

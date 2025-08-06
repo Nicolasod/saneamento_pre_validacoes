@@ -15,7 +15,7 @@ begin
   declare w_nome_rua varchar(120);
   declare w_conta integer;
  
-  set w_conta = 49; -- Informar aqui o último código de logradouro cadastrado no sistema
+  set w_conta = 472; -- Informar aqui o último código de logradouro cadastrado no sistema
  
   llloop: for ll as cursor2 dynamic scroll cursor for
 	  select i_pessoas,
