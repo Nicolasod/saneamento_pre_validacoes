@@ -10,9 +10,10 @@ having count(nome) > 1;
 
 
 -- CORREÇÃO
+-- Atualiza os nomes dos campos adicionais repetidos para evitar duplicidade
                 
 update bethadba.caracteristicas
-   set nome = 'i_caracteristicas' || nome
+   set nome = i_caracteristicas || nome
  where i_caracteristicas in (select nm_caract
 							   from (select max(i_caracteristicas) as nm_caract,
 							   				nome

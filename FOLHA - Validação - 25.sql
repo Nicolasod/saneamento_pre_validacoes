@@ -9,6 +9,7 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza os históricos salariais com salário zerado ou nulo para um valor mínimo (exemplo: 0.01) para evitar problemas de cálculos futuros
 
 update bethadba.hist_salariais
    set salario = 0.01

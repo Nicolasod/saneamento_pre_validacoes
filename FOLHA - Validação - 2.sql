@@ -17,6 +17,7 @@ select i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza a data de nascimento das pessoas para ser igual à data de admissão se a data de nascimento for maior que a data de admissão
 
 update bethadba.pessoas_fisicas
    set PF.dt_nascimento = F.dt_admissao

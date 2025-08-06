@@ -37,6 +37,7 @@ select left(tab.data_afastamento,8) || '01' as nova_data_final,
 
 
 -- CORREÇÃO
+-- Atualiza as variáveis com data inicial ou final maior que a data de rescisão, definindo a data final como o primeiro dia do mês da data de afastamento
 
 begin 
     declare w_i_funcionarios integer;

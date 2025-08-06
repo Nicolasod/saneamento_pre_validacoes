@@ -11,8 +11,7 @@ select i_entidades,
 
 
 -- CORREÇÃO
--- Atualiza a data final do gozo de férias para ser igual à data inicial mais o saldo de dias
--- Se a data inicial for maior que a data final
+-- Atualiza a data final do gozo de férias para ser igual à data inicial mais o saldo de dias se a data inicial for maior que a data final
 
 update bethadba.ferias
    set dt_gozo_fin = dateadd(day, saldo_dias, dt_gozo_ini)

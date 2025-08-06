@@ -12,6 +12,14 @@ select fpa.i_entidades,
 
 
 -- CORREÇÃO
+-- Altera o valor do campo valor_caracter para '0' para os funcionários que não são beneficiários e que possuem o valor '2' na característica 20369
+
+update bethadba.funcionarios_prop_adic
+   set valor_caracter = '0'
+ where i_caracteristicas = 20369
+   and valor_caracter = '2'
+   and i_funcionarios not in (select i_funcionarios
+                                from bethadba.beneficiarios);
 
 -- Altera o tipo para 'B'
 update bethadba.funcionarios

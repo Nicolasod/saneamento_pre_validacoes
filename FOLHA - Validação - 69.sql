@@ -11,6 +11,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza a descrição dos motivos de alteração salarial repetidos para evitar duplicidade
 
 update bethadba.motivos_altsal
    set motivos_altsal.descricao = motivos_altsal.descricao || '-' || motivos_altsal.i_motivos_altsal

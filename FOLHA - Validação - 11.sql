@@ -9,7 +9,8 @@ select pj.i_pessoas
 
 
 -- CORREÇÃO
+-- Atualiza os CNPJ nulos para 0 para evitar erros de validação.
 
 update bethadba.pessoas_juridicas
-   set cnpj ='32646663000174'
- where i_pessoas = 548;
+   set cnpj = right('000000000000' || cast((row_number() over (order by i_pessoas)) as varchar(12)), 12) || '91'
+ where cnpj is null;

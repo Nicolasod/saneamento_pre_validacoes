@@ -8,4 +8,8 @@ select i_tipos_diarias,
 
 
 -- CORREÇÃO
+-- Atualiza o valor nulo para 0 (zero)
 
+update bethadba.tipos_diarias
+   set vlr_diaria = 0
+ where vlr_diaria is null;

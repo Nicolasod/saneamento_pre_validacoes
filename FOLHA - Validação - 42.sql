@@ -7,6 +7,7 @@ select i_pessoas
 
 
 -- CORREÇÃO
+-- Atualiza a data de término de vigência para 2099-01-01 onde a data de término de vigência é maior que 2099-01-01
 
 update bethadba.bases_calc_outras_empresas
    set dt_vigencia_fin = '2099-01-01'

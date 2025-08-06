@@ -14,6 +14,7 @@ select (select dt_admissao
 
 
 -- CORREÇÃO
+-- Atualiza a data de afastamento para um dia após a data de admissão do funcionário onde a data de afastamento é menor que a data de admissão
 
 begin
 	declare w_dt_afastamento timestamp;

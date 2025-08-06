@@ -10,6 +10,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza os nomes dos bairros repetidos para evitar duplicidade
 
 update bethadba.bairros
    set bairros.nome = bairros.nome || ' - (Cod: ' || i_bairros  || ')'

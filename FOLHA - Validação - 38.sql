@@ -9,6 +9,7 @@ select i_config_organ,
 
 
 -- CORREÇÃO
+-- Atualiza a descrição da configuração de organograma para abreviar 'Entidade' para 'Ent' onde a descrição é maior que 30 caracteres
 
 update bethadba.config_organ 
    set descricao = replace(descricao, 'Entidade', 'Ent')

@@ -7,6 +7,7 @@ select i_atos
 
 
 -- CORREÇÃO
+-- Atualiza a natureza de texto jurídico para 99 (SEM INFORMAÇÃO) onde a natureza de texto jurídico é nula
                  
 insert into bethadba.natureza_texto_juridico (i_natureza_texto_juridico, descricao, codigo_tce, classif)
 values (99, 'SEM INFORMAÇÃO', 99, 9);

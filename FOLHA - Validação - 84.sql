@@ -10,8 +10,7 @@ select f.i_pessoas as pessoa
 
 
 -- CORREÇÃO
--- Atualiza a data de nascimento das pessoas fisicas com base na data de alteração mais recente
--- do histórico de pessoas, subtraindo 18 anos.
+-- Atualiza a data de nascimento das pessoas fisicas com base na data de alteração mais recente do histórico de pessoas, subtraindo 18 anos.
 
 update bethadba.pessoas_fisicas pf
    set pf.dt_nascimento = DATEADD(year, -18, max(hpf.dt_alteracoes))

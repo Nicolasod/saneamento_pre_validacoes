@@ -15,4 +15,10 @@ select funcoes_func.i_entidades,
 
 
 -- CORREÇÃO
+-- Atualizar as datas de início e fim para que não sejam anteriores à data de admissão
 
+update bethadba.funcoes_func
+   set dt_inicial = dt_admissao,
+       dt_final = dt_admissao
+ where dt_inicial < dt_admissao
+    or dt_final < dt_admissao;

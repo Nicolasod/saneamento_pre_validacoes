@@ -9,4 +9,9 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza o tipo de inscrição para 'F' (Pessoa Física) na configuração do RAIS
 
+update bethadba.parametros_rel
+   set tipo_insc = 'F'
+ where i_parametros_rel = 2
+   and (tipo_insc is null or tipo_insc = 'C');

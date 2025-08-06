@@ -8,6 +8,7 @@ select i_atos
 
 
 -- CORREÇÃO
+-- Atualiza os atos com número nulo para o i_atos como número do ato
 
 update bethadba.atos 
    set num_ato = i_atos 

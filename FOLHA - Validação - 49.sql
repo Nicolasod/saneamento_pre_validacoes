@@ -10,6 +10,7 @@ select length(observacao) as tamanho_observacao,
 
 
 -- CORREÇÃO
+-- Atualiza a observação do afastamento para conter no máximo 150 caracteres
 
 update bethadba.afastamentos
    set observacao = SUBSTR(observacao, 1, 150)

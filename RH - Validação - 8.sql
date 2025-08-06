@@ -11,4 +11,10 @@ select i_comissoes_aval,
 
 
 -- CORREÇÃO
+-- Atualiza a função para 'MEMBRO' quando a função não é válidada
 
+update bethadba.comissoes_aval_membros
+   set funcao = 'MEMBRO'
+ where funcao not like 'MEMBRO%'
+   and funcao not like 'PRESIDENTE%'
+   and funcao not like 'SECRETARIO%';

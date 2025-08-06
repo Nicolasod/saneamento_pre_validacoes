@@ -10,4 +10,10 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza o contato para espaço em branco onde é nulo
 
+update bethadba.parametros_rel
+   set contato = 'CONTATO RAIS'
+ where i_parametros_rel = 2
+   and tipo_insc = 'J'
+   and contato is null;

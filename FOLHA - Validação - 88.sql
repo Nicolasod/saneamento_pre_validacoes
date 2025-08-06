@@ -13,6 +13,7 @@ select dependentes.i_pessoas as pessoa,
 
 
 -- CORREÇÃO
+-- Atualiza a data de início de dependência para ser igual à data de nascimento do dependente se a data de início de dependência for menor que a data de nascimento
 
 update bethadba.dependentes
    set dt_ini_depende = dt_nascimento

@@ -10,6 +10,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza os tipos de atos repetidos para evitar duplicidade, adicionando o i_tipos_atos ao nome do tipo de atos
 
 update bethadba.tipos_atos
    set tipos_atos.nome = tipos_atos.i_tipos_atos || '-' || tipos_atos.nome

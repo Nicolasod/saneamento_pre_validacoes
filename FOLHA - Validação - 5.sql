@@ -9,6 +9,7 @@ select i_dependentes,
 
 
 -- CORREÇÃO
+-- Atualiza o grau do dependente para 5 (OUTROS) se o motivo de início do dependente não for um dos motivos válidos ou for nulo
 
 update bethadba.dependentes 
    set grau = 5 

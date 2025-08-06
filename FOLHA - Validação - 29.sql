@@ -20,6 +20,8 @@ select hs.i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza os históricos de funcionários com data de alteração maior que a data de rescisão, ajustando a data de alteração para um minuto após a última alteração ou para o primeiro dia do mês da data de rescisão se não houver alterações anteriores
+-- Isso garante que as alterações sejam consistentes com a data de rescisão e evita problemas de integridade referencial
 
 begin
   declare lsmsg varchar(100);

@@ -11,6 +11,7 @@ select a.i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza a data inicial da falta para o dia seguinte ao término das férias para os funcionários que possuem faltas concomitantes com férias
 
 delete bethadba.faltas as a
   from bethadba.ferias as b

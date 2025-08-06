@@ -1,36 +1,26 @@
-/*
- -- VALIDA«√O 113
- * Verifica os afastamentos concomitantes com ferias do funcionario
- */
+-- VALIDA√á√ÉO 113
+-- Verifica os afastamentos concomitantes com ferias do funcionario
 
-select 
-                a.i_funcionarios,
-                a.dt_inicial, b.dt_afastamento, b.dt_ultimo_dia  from bethadba.faltas a 
-join bethadba.afastamentos b on a.i_funcionarios = b.i_funcionarios 
-                where a.dt_inicial  between b.dt_afastamento  and b.dt_ultimo_dia
-                and a.i_entidades = b.i_entidades 
-          
-/*
- -- CORRE«√O
- */
-                
-begin                
-update bethadba.faltas a
-join bethadba.afastamentos b on (a.i_funcionarios = b.i_funcionarios and a.i_entidades = b.i_entidades)
-set b.dt_afastamento  = dateadd(dd, 1, a.dt_inicial)
-where a.dt_inicial  between b.dt_afastamento  and b.dt_ultimo_dia
-and i_faltas = 1
+select a.i_funcionarios,
+       a.dt_inicial,
+       b.dt_afastamento,
+       b.dt_ultimo_dia
+  from bethadba.faltas a 
+  join bethadba.afastamentos b
+    on a.i_funcionarios = b.i_funcionarios 
+ where a.dt_inicial between b.dt_afastamento and b.dt_ultimo_dia and a.i_entidades = b.i_entidades;
 
-update bethadba.faltas a 
-join bethadba.afastamentos b on (a.i_funcionarios = b.i_funcionarios and a.i_entidades = b.i_entidades)
-set b.dt_afastamento  = dateadd(dd, 1, a.dt_inicial)
-where a.dt_inicial  between b.dt_afastamento  and b.dt_ultimo_dia
-and i_faltas = 1
 
-update bethadba.faltas a 
-join bethadba.afastamentos b on (a.i_funcionarios = b.i_funcionarios and a.i_entidades = b.i_entidades)
-set b.dt_afastamento  = dateadd(mm, 1, a.dt_inicial)
-where a.dt_inicial  between b.dt_afastamento  and b.dt_ultimo_dia
-and i_faltas = 1
-end;
-           
+-- CORRE√á√ÉO
+-- Atualiza a data do afastamento para o dia seguinte ao t√©rmino da falta para os funcion√°rios que possuem afastamentos concomitantes com faltas
+
+update bethadba.afastamentos as a
+   set a.dt_afastamento = DATEADD(dd, 1, b.dt_inicial)
+  from bethadba.faltas as b
+ where a.dt_afastamento between b.dt_inicial and b.dt_ultimo_dia
+   and a.i_funcionarios = b.i_funcionarios
+   and a.i_entidades = b.i_entidades
+   and not exists (select 1
+                     from bethadba.afastamentos as a2
+      		        where a2.i_funcionarios = a.i_funcionarios
+                      and a2.dt_afastamento = DATEADD(dd, 1, b.dt_inicial));

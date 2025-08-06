@@ -10,4 +10,8 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Ajusta a finalidade para o máximo de 100 caracteres, eliminando o excesso
 
+update bethadba.diarias
+   set finalidade = substr(finalidade, 1, 100)
+ where length(finalidade) > 100;

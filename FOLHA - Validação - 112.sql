@@ -13,6 +13,7 @@ select a.i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza a data inicial do afastamento para o dia seguinte ao término das férias para os funcionários que possuem afastamentos concomitantes com férias
                 
 update bethadba.afastamentos as a
    set a.dt_afastamento = DATEADD(dd, 1, b.dt_gozo_fin)

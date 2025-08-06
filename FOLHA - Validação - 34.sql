@@ -10,6 +10,7 @@ select i_config_organ,
 
 
 -- CORREÇÃO
+-- Atualiza os níveis de organogramas com separadores nulos, definindo o separador como '.'
 
 update niveis_organ
    set separador_nivel = '.'

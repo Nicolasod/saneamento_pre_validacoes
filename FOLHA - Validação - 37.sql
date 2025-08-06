@@ -9,6 +9,7 @@ select i_canc_ferias,descricao
 
 
 -- CORREÇÃO
+-- Insere o tipo de afastamento 1 (Afastamento para Férias) na configuração de cancelamento de férias, garantindo que haja pelo menos um tipo de afastamento associado
 
 insert into bethadba.canc_ferias_afast (i_canc_ferias, i_tipos_afast)
 values (2, 1);

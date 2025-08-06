@@ -18,6 +18,7 @@ select e.i_entidades as entidade,
 
 
 -- CORREÇÃO
+-- Atualiza o valor do sub-teto para 99999 onde o valor é nulo, garantindo que todos os tipos administrativos tenham um valor definido para o sub-teto
                 
 update bethadba.hist_tipos_adm as hta
    set hta.vlr_sub_teto = '99999'

@@ -8,4 +8,8 @@ select i_areas_atuacao,
 
 
 -- CORREÇÃO
+-- A descrição da habilitação deve ser corrigida para que não ultrapasse o limite de 100 caracteres.
 
+update bethadba.areas_atuacao
+   set descr_habilitacao = substr(descr_habilitacao, 1, 100)
+ where length(descr_habilitacao) > 100;

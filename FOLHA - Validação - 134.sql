@@ -37,6 +37,7 @@ select hf.i_entidades as chave_dsk1,
 
 
 -- CORREÇÃO
+-- Ajusta a data final da variavel para a data de rescisão e remove os lançamentos posteriores a rescisão
                 
 begin
     llLoop: for ll as cur_01 dynamic scroll cursor for

@@ -8,6 +8,7 @@ select i_motivos_altponto,
 
 
 -- CORREÇÃO
+-- Trunca a descrição do motivo de alteração do ponto para 30 caracteres
 
 update bethadba.motivos_altponto
    set descricao = left(descricao, 30)

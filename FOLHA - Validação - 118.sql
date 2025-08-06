@@ -8,6 +8,7 @@ select i_licpremio_config,
 
 
 -- CORREÇÃO
+-- Atualiza as faixas de licenças prêmios para o valor 99, que é o valor máximo permitido
 
 update bethadba.licpremio_faixas
    set i_faixas = 99

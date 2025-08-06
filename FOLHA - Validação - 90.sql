@@ -10,8 +10,7 @@ having total > 1;
 
 
 -- CORREÇÃO
--- Atualiza o campo codigo_esocial para remover o ultimo digito e adicionar o correto
--- Se o ultimo digito for 2, adiciona 3, se for 1, adiciona 2
+-- Atualiza o campo codigo_esocial para remover o último digito e adicionar o correto se o último digito for 2, adiciona 3, se for 1, adiciona 2
 -- A atualização é feita apenas para os funcionarios que possuem o codigo_esocial duplicado
 
 update bethadba.funcionarios 

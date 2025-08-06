@@ -10,6 +10,7 @@ select i_comissoes_aval,
 
 
 -- CORREÇÃO
+-- Excluir comissões que não possuem membros cadastrados
 
 delete from bethadba.comissoes_aval
  where not exists (select first 1 

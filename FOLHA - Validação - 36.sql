@@ -13,6 +13,7 @@ select a.i_atos,
 
 
 -- CORREÇÃO
+-- Atualiza a data de publicação do ato para ser igual à data de fonte de divulgação onde a data de fonte de divulgação é menor que a data de publicação do ato
 
 update bethadba.atos as a
  inner join bethadba.fontes_atos as fa

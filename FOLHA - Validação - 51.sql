@@ -9,8 +9,7 @@ select i_entidades,
    and i_motivos_apos is null;
 
 -- CORREÇÃO
--- Atualiza o motivo de aposentadoria para 1 (aposentadoria por tempo de serviço)
--- onde o motivo de rescisão é 7 (aposentadoria) e o motivo de aposentadoria é nulo
+-- Atualiza o motivo de aposentadoria para 1 (aposentadoria por tempo de serviço) onde o motivo de rescisão é 7 (aposentadoria) e o motivo de aposentadoria é nulo
 -- Isso garante que todas as rescisões de aposentadoria tenham um motivo definido
 
 update bethadba.rescisoes 

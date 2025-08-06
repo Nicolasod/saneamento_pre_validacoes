@@ -11,6 +11,7 @@ select d.i_dependentes,
 
 
 -- CORREÇÃO
+-- Atualiza a data de início da dependência para ser igual à data de nascimento do dependente se a data de nascimento for maior que a data de início da dependência
                 
 update bethadba.dependentes a 
   join bethadba.pessoas_fisicas b

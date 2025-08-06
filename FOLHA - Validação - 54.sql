@@ -10,8 +10,7 @@ select i_entidades,
 
 
 -- CORREÇÃO
--- Atualiza o número de telefone na lotação física para remover caracteres especiais
--- e garantir que o número tenha no máximo 9 caracteres
+-- Atualiza o número de telefone na lotação física para remover caracteres especiais e garantir que o número tenha no máximo 9 caracteres
 
 update bethadba.locais_trab 
    set fone = replace(replace(replace(fone,'(',''),')',''),'48','')

@@ -7,6 +7,7 @@ select estagios.i_funcionarios
 
 
 -- CORREÇÃO
+-- Atualiza o número da apólice de seguro dos estagiários que não possuem número da apólice informado para 0
 
 update bethadba.hist_funcionarios
    set num_apolice_estagio = 0

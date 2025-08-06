@@ -20,6 +20,7 @@ select funcionarios.i_entidades entidade,
 
 
 -- CORREÇÃO
+-- Atualiza o tipo de vínculo para 3 (Conselheiro Tutelar) onde o funcionário é conselheiro tutelar e o tipo de vínculo é diferente de 3
 
 update bethadba.vinculos
    set tipo_vinculo = 3

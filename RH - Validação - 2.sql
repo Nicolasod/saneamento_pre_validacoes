@@ -8,6 +8,7 @@ select i_distancias,
 
 
 -- CORREÇÃO
+-- Atualizando o total de KM para 999 onde está nulo
 
 update bethadba.distancias
    set total_km = 999

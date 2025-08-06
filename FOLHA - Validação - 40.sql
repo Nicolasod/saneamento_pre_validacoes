@@ -10,6 +10,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza os RG's repetidos para nulo, evitando duplicidade
  
 update bethadba.pessoas_fisicas as pf1
    set rg = null

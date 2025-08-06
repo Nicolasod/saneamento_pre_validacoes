@@ -8,4 +8,8 @@ select i_fatores,
 
 
 -- CORREÇÃO
+-- Atualizando a descrição para que não exceda o limite de 500 caracteres
 
+update bethadba.fatores
+   set descricao = substr(descricao, 1, 500)
+ where length(descricao) > 500;

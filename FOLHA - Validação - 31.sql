@@ -22,6 +22,7 @@ select hs.i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza os históricos de cargos com data de alteração maior que a data de rescisão, ajustando a data de alteração para um minuto após a última alteração ou para o primeiro dia do mês da data de rescisão se não houver alterações anteriores
 
 for a1 as a2 cursor for
     select

@@ -17,8 +17,7 @@ select  principal = if isnull(locais_mov.principal,'N') = 'S' then 'true' else '
 
 
 -- CORREÇÃO
--- Atualiza o campo principal para 'N' para todos os locais de trabalho dos funcionarios
--- e depois atualiza para 'S' apenas o local de trabalho com a maior data de início
+-- Atualiza o campo principal para 'N' para todos os locais de trabalho dos funcionarios e depois atualiza para 'S' apenas o local de trabalho com a maior data de início
 
 update bethadba.locais_mov
    set principal = 'N';

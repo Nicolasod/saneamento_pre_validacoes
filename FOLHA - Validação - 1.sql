@@ -11,6 +11,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza os nomes dos logradouros duplicados para evitar duplicidade
 
 update bethadba.ruas
    set nome = i_ruas || '-' || nome

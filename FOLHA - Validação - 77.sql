@@ -17,6 +17,7 @@ select estagios.i_entidades entidade,
 
 
 -- CORREÇÃO
+-- Atualiza o supervisor de estágio para o funcionário correspondente, onde o supervisor de estágio é nulo
  
 update bethadba.hist_funcionarios 
    set hist_funcionarios.i_supervisor_estagio = (select i_pessoas

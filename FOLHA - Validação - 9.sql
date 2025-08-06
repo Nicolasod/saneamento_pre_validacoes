@@ -10,6 +10,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza os PIS's repetidos para nulo, mantendo apenas o maior i_pessoas
                
 update bethadba.pessoas_fisicas as pf
    set pf.num_pis = null

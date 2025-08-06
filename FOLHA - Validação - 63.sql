@@ -12,8 +12,7 @@ select c1.i_cargos,
 
 
 -- CORREÇÃO
--- Atualiza os cargos que possuem quantidade de vagas maior que 9999
--- e as vagas acrescidas para 9999
+-- Atualiza os cargos que possuem quantidade de vagas maior que 9999 e as vagas acrescidas para 9999
 
 update bethadba.cargos_compl a
    set a.qtd_vagas = 9999,

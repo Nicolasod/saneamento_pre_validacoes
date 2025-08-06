@@ -13,8 +13,13 @@ select fpa.i_entidades,
 
 
 -- CORREÇÃO
+-- Altera o campo adicional 20369 para '0' quando o funcionário não tem rescisão
 
 update bethadba.funcionarios_prop_adic fpa
-   set valor_caracter = null
- where i_caracteristicas = 20369
-   and i_funcionarios in (5, 329);
+   set fpa.valor_caracter = '0'
+ where fpa.i_caracteristicas = 20369 
+   and fpa.valor_caracter = '1'
+   and fpa.i_funcionarios not in (select r.i_funcionarios
+                                    from bethadba.rescisoes r
+                                   where r.i_motivos_apos is not null
+                                     and r.dt_canc_resc is null);

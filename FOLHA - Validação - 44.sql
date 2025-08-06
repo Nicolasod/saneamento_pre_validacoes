@@ -8,6 +8,7 @@ select i_ruas, nome
 
 
 -- CORREÇÃO
+-- Atualiza o nome da rua para 'rua sem nome' onde o nome está vazio ou é nulo
 
 update bethadba.ruas 
    set nome = 'rua sem nome 40'

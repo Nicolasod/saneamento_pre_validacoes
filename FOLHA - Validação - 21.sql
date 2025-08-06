@@ -10,6 +10,7 @@ select i_motivos_resc,
 
 
 -- CORREÇÃO
+-- Atualiza a categoria eSocial nulo para um valor padrão (exemplo: '01') para evitar problemas de integridade referencial
 
 update bethadba.motivos_resc set categoria_esocial = '01' where i_motivos_resc = 1;
 update bethadba.motivos_resc set categoria_esocial = '02' where i_motivos_resc = 2;

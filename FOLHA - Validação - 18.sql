@@ -11,6 +11,7 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza os CBO's nulos para um valor padrão (exemplo: 312320) para evitar problemas de integridade referencial
 
 update bethadba.cargos
    set i_cbo = 312320 

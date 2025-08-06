@@ -22,6 +22,7 @@ select f.i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza os dados bancários dos funcionários com forma de pagamento 'R' (Crédito em conta) para os dados correspondentes na tabela pessoas_contas
 
 update bethadba.hist_funcionarios,
        bethadba.pessoas_contas,

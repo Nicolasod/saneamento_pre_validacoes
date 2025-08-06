@@ -11,8 +11,7 @@ select i_pessoas as pessoa,
 
 
 -- CORREÇÃO
--- Atualiza o nome do pai para um valor fictício quando o nome do pai é igual ao nome da mãe
--- e o nome do pai não é nulo ou vazio.
+-- Atualiza o nome do pai para um valor fictício quando o nome do pai é igual ao nome da mãe e o nome do pai não é nulo ou vazio.
 
 update bethadba.pessoas_fis_compl
    set nome_pai = 'PAI_FICTICIO_' || cast(i_pessoas as varchar)

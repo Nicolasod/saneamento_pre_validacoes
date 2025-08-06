@@ -13,4 +13,12 @@ select c.i_cursos,
 
 
 -- CORREÇÃO
+-- Atualiza a descrição do curso para evitar duplicidade
 
+update bethadba.cursos
+   set nome = i_cursos || ' - ' || nome
+ where exists (select first 1
+                 from bethadba.cursos as c2
+                where c2.nome = bethadba.cursos.nome
+                  and c2.tipo = bethadba.cursos.tipo
+                  and c2.i_cursos <> bethadba.cursos.i_cursos);

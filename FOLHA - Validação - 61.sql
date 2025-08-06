@@ -10,8 +10,7 @@ select i_pessoas ,
 
 
 -- CORREÇÃO
--- Atualiza o motivo de término dos dependentes que não possuem motivo de término
--- para 0 (sem motivo de término)
+-- Atualiza o motivo de término dos dependentes que não possuem motivo de término para 0 (sem motivo de término)
 
 update bethadba.dependentes
    set mot_fin_depende = 0

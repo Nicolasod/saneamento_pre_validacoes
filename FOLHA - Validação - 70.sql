@@ -14,8 +14,7 @@ select ferias.i_entidades,
 
 
 -- CORREÇÃO
--- Atualiza a data de fim do gozo das férias para um dia antes da data de rescisão
--- para os funcionários que possuem férias com data de fim do gozo igual ou após a data da rescisão.
+-- Atualiza a data de fim do gozo das férias para um dia antes da data de rescisão para os funcionários que possuem férias com data de fim do gozo igual ou após a data da rescisão.
 
 update bethadba.ferias, bethadba.rescisoes
    set ferias.dt_gozo_fin = (rescisoes.dt_rescisao - 1)

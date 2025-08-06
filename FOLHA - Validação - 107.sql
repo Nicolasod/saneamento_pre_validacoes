@@ -12,8 +12,7 @@ select f.i_entidades,
 
 
 -- CORREÇÃO
--- Atualiza a data final da lotação para a data de fim do vínculo temporário
--- Apenas para os casos onde a data final da lotação é maior que a data de fim
+-- Atualiza a data final da lotação para a data de fim do vínculo temporário apenas para os casos onde a data final da lotação é maior que a data de fim
 
 update bethadba.locais_mov
    set dt_final = dt_fim_vinculo

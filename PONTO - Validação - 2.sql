@@ -10,13 +10,11 @@ select list(i_entidades) as entidades,
 having quantidade > 1;
 
 -- CORREÇÃO
-update bethadba.turmas t
-   set descricao = t.i_turmas || '-' || t.descricao
- where exists (
-   select 1
-     from bethadba.turmas t2
-    where trim(t2.descricao) = trim(t.descricao)
-    group by trim(t2.descricao)
-    having count(*) > 1
- );
---
+-- Atualiza as descrições repetidas para que sejam únicas
+
+update bethadba.turmas
+   set descricao = concat(i_turmas, ' - ', descricao)
+ where i_turmas in (select i_turmas
+                      from bethadba.turmas
+                     group by descricao, i_turmas
+                    having count(descricao) > 1);

@@ -12,8 +12,7 @@ select periodos_ferias.i_entidades entidade,
 
 
 -- CORREÇÃO
--- Atualiza o campo observação do motivo do cancelamento de férias para nulo
--- (considerando que o campo observação é do tipo texto longo e não deve ter mais de 50 caracteres)
+-- Atualiza o campo observação do motivo do cancelamento de férias para nulo (considerando que o campo observação é do tipo texto longo e não deve ter mais de 50 caracteres)
 
 update bethadba.periodos_ferias
    set observacao = null

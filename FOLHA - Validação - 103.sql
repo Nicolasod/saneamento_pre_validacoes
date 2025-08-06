@@ -20,7 +20,7 @@ select beneficiarios.i_funcionarios
 
 update bethadba.funcionarios
    set funcionarios.dt_admissao = dateadd(day, 1, rescisoes.dt_rescisao)
-  from  bethadba.beneficiarios , bethadba.rescisoes , bethadba.funcionarios 
+  from bethadba.beneficiarios , bethadba.rescisoes , bethadba.funcionarios 
  where beneficiarios.i_entidades = rescisoes.i_entidades
    and beneficiarios.i_instituidor = rescisoes.i_funcionarios
    and beneficiarios.i_funcionarios = funcionarios.i_funcionarios

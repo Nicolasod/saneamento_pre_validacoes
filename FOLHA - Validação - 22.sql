@@ -8,6 +8,7 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza a data de fechamento das folhas que não foram fechadas, adicionando a data de fechamento como o último dia do mês da competência
 
 for a1 as a2 cursor for
     select xxi_ent = i_entidades,
@@ -25,5 +26,4 @@ do
        and i_entidades = xxi_ent;
     
     message 'Data de fechamento adicionada: ' || xxdt_fechamento || ', na competencia: ' || i_competencias || '. Linha: ' ||linha to client; 
-
 end for;

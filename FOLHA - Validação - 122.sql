@@ -9,8 +9,9 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Configuração Rais sem controle de ponto
 
 update bethadba.parametros_rel
-set sistema_ponto = 4
-where sistema_ponto is null
-  and i_parametros_rel = 2;
+   set sistema_ponto = 0
+ where sistema_ponto is null
+   and i_parametros_rel = 2;

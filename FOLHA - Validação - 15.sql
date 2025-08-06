@@ -8,6 +8,7 @@ select i_ruas,
 
 
 -- CORREÇÃO
+-- Atualiza os logradouros sem cidades para a cidade padrão (i_entidades = 1)
   
 update bethadba.ruas
    set i_cidades = (select max(i_cidades)

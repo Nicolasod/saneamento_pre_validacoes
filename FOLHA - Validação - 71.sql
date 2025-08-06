@@ -12,6 +12,7 @@ select hf.i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza a conta bancária dos funcionários com forma de pagamento 'R' (Crédito em conta) para a conta bancária correspondente na tabela pessoas_contas
 
 update bethadba.hist_funcionarios hf
    set forma_pagto = 'D'

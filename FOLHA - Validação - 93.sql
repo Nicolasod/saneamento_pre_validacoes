@@ -54,8 +54,7 @@ select distinct funcionarios.i_entidades as chave_dsk1,
 
 
 -- CORREÇÃO
--- Exclui os registros de histórico de funcionários e de histórico de funcionários com proventos adicionais
--- que estejam com data de alteração posterior a data de cessação da aposentadoria
+-- Exclui os registros de histórico de funcionários e de histórico de funcionários com proventos adicionais que estejam com data de alteração posterior a data de cessação da aposentadoria
 
 delete from bethadba.hist_funcionarios
  where exists (select 1

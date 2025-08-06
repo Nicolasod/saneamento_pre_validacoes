@@ -16,6 +16,7 @@ select dependentes.i_pessoas resp ,
 
 
 -- CORREÇÃO
+-- Atualiza a data de nascimento dos dependentes com grau de parentesco 1, 6, 8 ou 11 para ser igual à do responsável se a data de nascimento do dependente for menor que a do responsável
 
 update bethadba.dependentes 
   join bethadba.pessoas_fisicas p

@@ -9,6 +9,7 @@ select i_tipos_afast,
 
 
 -- CORREÇÃO
+-- Atualiza a classificação dos tipos de afastamento para 2 (outros) onde a classificação é nula ou igual a 1
 
 update bethadba.tipos_afast
    set classif = 2

@@ -16,6 +16,7 @@ select f.i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza o campo tipo_pens para 1 (pensão por morte) para os pensionistas que estão com o campo tipo_pens como null
 
 update bethadba.funcionarios as f
    set f.tipo_pens = 1

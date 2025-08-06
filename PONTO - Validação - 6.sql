@@ -10,4 +10,8 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Exclui as permutas com datas nulas
 
+delete bethadba.permuta_func_turmas as pft
+ where dt_inicial is null
+    or dt_final is null;

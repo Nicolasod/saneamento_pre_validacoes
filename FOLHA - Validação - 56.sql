@@ -11,8 +11,7 @@ having count(niveis.nome) > 1;
 
 
 -- CORREÇÃO
--- Atualiza os nomes dos níveis salariais repetidos, adicionando o identificador do nível ao início do nome
--- e garantindo que os nomes sejam únicos
+-- Atualiza os nomes dos níveis salariais repetidos, adicionando o identificador do nível ao início do nome e garantindo que os nomes sejam únicos
 
 update bethadba.niveis
    set niveis.nome = niveis.i_niveis || ' - ' || niveis.nome

@@ -7,6 +7,7 @@ select i_pessoas
 
 
 -- CORREÇÃO
+-- Atualiza o número de endereço para 0 onde o número é vazio
 
 update bethadba.pessoas_enderecos 
    set numero = 0

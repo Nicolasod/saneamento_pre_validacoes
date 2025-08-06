@@ -9,4 +9,9 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza o responsável para a configuração Rais caso não tenha responsável cadastrado
 
+update bethadba.parametros_rel
+   set nome_resp = 'RAIS'
+ where i_parametros_rel = 2
+   and nome_resp is null;

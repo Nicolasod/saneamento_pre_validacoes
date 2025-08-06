@@ -9,6 +9,7 @@ select i_motivos_apos,
 
               
 -- CORREÇÃO
+-- Atualiza a categoria eSocial nulo para um valor padrão (exemplo: '38' para aposentadoria, exceto por invalidez) para evitar problemas de integridade referencial
                 
 update bethadba.motivos_apos
    set categoria_esocial = '38' //Aposentadoria, exceto por ivalidez

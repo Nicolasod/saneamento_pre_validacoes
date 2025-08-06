@@ -31,6 +31,7 @@ having quantidade < mes
 
 
 -- CORREÇÃO
+-- Excluir as variáveis que não possuem serviço lançado para todos os meses compreendidos pelo lançamento de variáveis
 
 delete from bethadba.variaveis
  where exists (select 1  

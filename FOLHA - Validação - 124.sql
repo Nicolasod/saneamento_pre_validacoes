@@ -1,12 +1,17 @@
-/*
- -- VALIDA«√O 124
- * ConfiguraÁ„o Rais sem controle de ponto
- */
+-- VALIDA√á√ÉO 124
+-- Configura√ß√£o Rais sem controle de ponto
 
-select i_entidades, i_parametros_rel from bethadba.parametros_rel
-           where i_entidades in (1,2,3,4) and i_parametros_rel = 2 and mes_base is null
+select i_entidades,
+       i_parametros_rel
+  from bethadba.parametros_rel
+ where i_parametros_rel = 2
+   and mes_base is null;
 
-/*
- -- CORRE«√O
- */
 
+-- CORRE√á√ÉO
+-- Atualiza o m√™s base para outubro de 2023 para o par√¢metro de controle de ponto sem controle de ponto que n√£o possui m√™s base definido.
+
+update bethadba.parametros_rel
+   set mes_base = '2023-10-01'
+ where i_parametros_rel = 2
+   and mes_base is null;

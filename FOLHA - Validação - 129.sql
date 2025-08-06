@@ -10,6 +10,7 @@ select atos_func.i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza a data a vigorar do ato para que não seja maior que a movimentação do ato.
 
 update bethadba.atos_func as af
  inner join bethadba.atos as a

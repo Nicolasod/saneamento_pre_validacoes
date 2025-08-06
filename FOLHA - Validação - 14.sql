@@ -10,10 +10,11 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
--- Remove os tipos de base repetidos, mantendo apenas o registro com menor i_tipos_bases para cada nome
+-- Atualiza os nomes dos tipos bases repetidos para evitar duplicidade
 
-delete from bethadba.tipos_bases
-where i_tipos_bases not in (
-    select min(i_tipos_bases)
-    from bethadba.tipos_bases
-    group by nome
+update bethadba.tipos_bases
+   set nome = i_tipos_bases || ' - ' || nome
+ where nome in (select nome
+                  from bethadba.tipos_bases 
+                 group by nome 
+                having count(nome) > 1);

@@ -11,6 +11,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza as descrições duplicadas adicionando um sufixo numérico para diferenciá-las
 
 -- 1. Criar uma tabela temporária com identificadores únicos para as duplicadas
 create table #duplicadas (i_entidades integer, i_horarios_ponto integer, nova_descricao char(100));

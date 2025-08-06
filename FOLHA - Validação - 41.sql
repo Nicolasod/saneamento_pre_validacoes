@@ -11,6 +11,7 @@ having count(cargos.nome) > 1;
 
 
 -- CORREÇÃO
+-- Atualiza os nomes dos cargos repetidos para evitar duplicidade, adicionando o i_cargos ao nome do cargo
    
 update bethadba.cargos
    set cargos.nome = trim(cargos.i_cargos) || '-' || trim(cargos.nome)

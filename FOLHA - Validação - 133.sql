@@ -11,6 +11,7 @@ select funcionarios.i_funcionarios,
 
 
 -- CORREÇÃO
+-- Adiciona data de fechamento de cálculo da folha para as entidades que não possuem data de fechamento de cálculo da folha
 
 for a1 as a2 cursor for
     select xxi_ent = i_entidades,
@@ -26,6 +27,5 @@ do
      where i_competencias < '2099-12-01'
        and i_entidades = xxi_ent;
        
-    message 'Data de fechamento adicionada: ' || xxdt_fechamento || ', na competencia: ' || i_competencias || '. Linha: ' ||linha to client; 
-
+    message 'Data de fechamento adicionada: ' || xxdt_fechamento || ', na competencia: ' || i_competencias || '. Linha: ' ||linha to client;
 end for;

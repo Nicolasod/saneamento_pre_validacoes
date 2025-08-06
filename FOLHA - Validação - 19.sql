@@ -10,6 +10,7 @@ select i_vinculos,
 
 
 -- CORREÇÃO
+-- Atualiza a categoria eSocial nulo para um valor padrão (exemplo: 105) para evitar problemas de integridade referencial
 
 update bethadba.vinculos
    set categoria_esocial = 105

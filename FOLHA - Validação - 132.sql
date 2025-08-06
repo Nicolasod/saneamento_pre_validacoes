@@ -8,6 +8,7 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza o campo indicativo_entidade_educativa para 'N' onde está nulo (considerando que a entidade educacional não é obrigatória)
 
 update bethadba.hist_entidades_compl
    set indicativo_entidade_educativa = 'N'

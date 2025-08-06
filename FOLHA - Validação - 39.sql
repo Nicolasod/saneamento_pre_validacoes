@@ -10,6 +10,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza a descrição da configuração de organograma repetido para evitar duplicidade, adicionando o i_config_organ ao nome da configuração
 
 update bethadba.config_organ
    set descricao = i_config_organ || '-' || descricao

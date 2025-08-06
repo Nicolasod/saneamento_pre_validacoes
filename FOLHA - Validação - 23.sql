@@ -11,6 +11,7 @@ select bethadba.dbf_getdatapagamentoferias(ferias.i_entidades,ferias.i_funcionar
 
 
 -- CORREÇÃO 1
+-- Atualiza as folhas de férias sem data de pagamento, definindo a data de pagamento como o último dia do mês da competência
 
 insert into bethadba.ferias_proc
 select i_entidades,
@@ -28,6 +29,7 @@ select i_entidades,
                      and ferias_proc.i_ferias = ferias.i_ferias);
 
 -- CORREÇÃO 2
+-- Atualiza as folhas de férias sem data de pagamento, definindo a data de pagamento como o último dia do mês da competência
 
 begin
 	declare w_i_entidades integer;

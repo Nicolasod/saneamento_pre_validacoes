@@ -7,6 +7,7 @@ select ae.i_agrupadores
 
 
 -- CORREÇÃO
+-- Atualiza a ordenação dos agrupadores de eventos que estão com ordenação nula com o valor do campo i_agrupadores
 
 update bethadba.agrupadores_eventos
    set ordenacao = i_agrupadores

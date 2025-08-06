@@ -12,6 +12,7 @@ select dependentes.i_pessoas as pessoa,
 
 
 -- CORREÇÃO
+-- Atualiza a data de casamento dos dependentes para nulo se a data de casamento for menor que a data de nascimento do dependente
 
 update bethadba.dependentes
    set dt_casamento = null

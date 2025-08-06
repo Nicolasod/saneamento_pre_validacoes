@@ -28,7 +28,8 @@ select hf.i_funcionarios,
 
 
 -- CORREÇÃO
-                
+-- Altera a previdência federal para 'Sim' quando o histórico da matrícula não possuí nenhuma previdência marcada
+
 update bethadba.hist_funcionarios hf
    set hf.prev_federal = 'S'
   from bethadba.funcionarios f

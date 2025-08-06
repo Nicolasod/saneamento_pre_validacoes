@@ -11,6 +11,7 @@ select distinct i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza o campo prev_federal para 'S' e fundo_prev para 'N' para os vínculos empregatícios CLT que não possuem opção federal marcada
 
 update bethadba.hist_funcionarios 
  inner join bethadba.vinculos v

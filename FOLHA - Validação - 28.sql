@@ -10,6 +10,7 @@ having quantidade > 1;
 
 
 -- CORREÇÃO
+-- Atualiza os tipos de afastamentos repetidos para evitar duplicidade, adicionando o i_tipos_afast ao nome do tipo de afastamento
 
 update bethadba.tipos_afast
    set tipos_afast.descricao = tipos_afast.i_tipos_afast || '-' || tipos_afast.descricao

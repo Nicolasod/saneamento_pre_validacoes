@@ -10,6 +10,7 @@ select m.i_eventos as eventos,
 
 
 -- CORREÇÃO
+-- Exclui os eventos de média vantagem que não possuem eventos vinculados
 
 delete from bethadba.mediasvant
  where not exists(select 1

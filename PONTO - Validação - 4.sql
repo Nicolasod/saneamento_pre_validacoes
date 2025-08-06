@@ -8,4 +8,8 @@ select i_funcionarios,
 
 
 -- CORREÇÃO
+-- Atualiza as marcações com origem inválida para uma origem válida
 
+update bethadba.apuracoes_marc
+   set origem_marc = 'I'
+ where origem_marc not in ('O','I','A');

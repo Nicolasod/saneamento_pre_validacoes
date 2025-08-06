@@ -10,6 +10,7 @@ select pessoas.i_pessoas
 
 
 -- CORREÇÃO
+-- Atualiza os PIS's inválidos para nulo
                  
 update bethadba.pessoas_fisicas 
    set num_pis = null 

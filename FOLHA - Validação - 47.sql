@@ -9,6 +9,7 @@ select i_eventos_medias,
 
 
 -- CORREÇÃO
+-- Exclui os eventos de média vantagem que estão compondo outros eventos de média vantagem
 
 delete from bethadba.mediasvant_eve 
  where i_eventos = 1033;

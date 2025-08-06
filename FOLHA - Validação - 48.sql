@@ -15,6 +15,7 @@ select f.dt_admissao,
 
 
 -- CORREÇÃO
+-- Atualiza a data inicial da lotação física para a data de admissão do funcionário onde a data de admissão é maior que a data inicial da lotação física
 
 update bethadba.locais_mov
    set lm.dt_inicial = f.dt_admissao
