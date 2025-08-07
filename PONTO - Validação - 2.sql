@@ -13,8 +13,8 @@ having quantidade > 1;
 -- Atualiza as descrições repetidas para que sejam únicas
 
 update bethadba.turmas
-   set descricao = concat(i_turmas, ' - ', descricao)
- where i_turmas in (select i_turmas
-                      from bethadba.turmas
-                     group by descricao, i_turmas
-                    having count(descricao) > 1);
+   set descricao = i_turmas || ' - ' || descricao
+ where exists (select 1 
+                 from bethadba.turmas t2
+                where t1.descricao = t2.descricao
+                  and t1.i_turmas <> t2.i_turmas);
