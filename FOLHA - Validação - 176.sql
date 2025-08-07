@@ -16,7 +16,18 @@ select hf.i_entidades,
 
 
 -- CORREÇÃO
+-- Atualizar a categoria_esocial do vinculo do conselheiro para 771
 
-update hist_funcionarios
-   set i_vinculos = 18
- where i_funcionarios in (2642,2642,1794,1796,1793,1795,1797,2377,2376,2456);
+update bethadba.vinculos
+   set categoria_esocial = '771'
+ where i_vinculos in (select hf.i_vinculos
+                        from bethadba.hist_funcionarios as hf
+                        join bethadba.funcionarios as f
+                          on hf.i_entidades = f.i_entidades
+                         and hf.i_funcionarios = f.i_funcionarios
+                       where f.tipo_func = 'A' 
+                         and f.conselheiro_tutelar = 'S'
+                         and hf.i_vinculos is not null
+                         and hf.i_vinculos in (select i_vinculos
+                                                 from bethadba.vinculos
+                                                where categoria_esocial <> '771'));

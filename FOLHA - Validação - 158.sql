@@ -11,6 +11,7 @@ select pe.i_pessoas,
 
 
 -- CORREÇÃO
+-- Atualiza a coluna i_cidades na tabela pessoas_enderecos com o valor correto da tabela ruas
 
 update bethadba.pessoas_enderecos as pe
    set pe.i_cidades = r.i_cidades 

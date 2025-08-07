@@ -8,6 +8,7 @@ select i_pessoas,
 
 
 -- CORREÇÃO
+-- Atualiza a data de nascimento do dependente como data de inicio do dependente
 
 update bethadba.dependentes d
    set dt_ini_depende = pf.dt_nascimento

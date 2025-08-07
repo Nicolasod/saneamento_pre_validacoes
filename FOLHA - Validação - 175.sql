@@ -19,6 +19,7 @@ select pf.i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza lançamentos manuais para não manual
 
 update periodos_ferias as pf
    set pf.manual = 'N'

@@ -9,6 +9,7 @@ select i_pessoas
 
 
 -- CORREÇÃO
+-- Atualiza os endereços de pessoas com os valores máximos das entidades para i_ruas, i_bairros e i_cidades onde os valores estão faltando
 
 update bethadba.pessoas_enderecos
    set i_ruas = (select max(i_ruas) from bethadba.entidades),

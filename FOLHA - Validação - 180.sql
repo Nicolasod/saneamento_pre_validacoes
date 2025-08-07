@@ -12,11 +12,12 @@ select c.i_entidades,
   join bethadba.cargos_compl as cc
     on c.i_entidades = cc.i_entidades
    and c.i_cargos = cc.i_cargos
- where tc.classif in (0,2)
+ where tc.classif in (0, 2)
    and cc.i_config_ferias is not null;
 
 
 -- CORREÇÃO
+-- Remove a configuração de férias dos cargos com classificação comissionado ou não classificado
 
 update bethadba.cargos_compl cc
    set i_config_ferias = null
@@ -25,5 +26,5 @@ update bethadba.cargos_compl cc
     on c.i_tipos_cargos = tc.i_tipos_cargos
  where c.i_entidades = cc.i_entidades
    and c.i_cargos = cc.i_cargos
-   and tc.classif in (0,2)
+   and tc.classif in (0, 2)
    and cc.i_config_ferias is not null;

@@ -19,6 +19,7 @@ select hpp.i_entidades,
 
 
 -- CORREÇÃO
+-- Preenchendo o campo desoneração de folha com o valor 2
 
 update bethadba.hist_parametros_previd as hpp
    set hpp.desoneracao_folha = 2

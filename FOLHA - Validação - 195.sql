@@ -11,8 +11,9 @@ select i_agrupadores,
 
 
 -- CORREÇÃO
+-- Excluir agrupadores sem eventos
 
 delete from agrupadores_eventos
- where not exists(select first 1
-                    from bethadba.eventos
-                   where i_agrupadores = agrupadores_eventos.i_agrupadores);
+ where not exists (select first 1
+                     from bethadba.eventos
+                    where i_agrupadores = agrupadores_eventos.i_agrupadores);

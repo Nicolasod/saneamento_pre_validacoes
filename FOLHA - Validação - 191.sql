@@ -10,6 +10,7 @@ select a.i_entidades,
 
 
 -- CORREÇÃO
+-- Atualiza a data de ultimo dia para ser um dia após a data de afastamento para os registros que possuem data de ultimo dia anterior a data de afastamento
 
 update afastamentos as a
    set a.dt_ultimo_dia = DATEADD(day, 1, a.dt_afastamento)

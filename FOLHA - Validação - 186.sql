@@ -9,6 +9,7 @@ select i_entidades,
 
 
 -- CORREÇÃO
+-- Truncar a descrição para 50 caracteres
 
 update bethadba.periodos_trab
    set descricao = substr(descricao, 1, 50)

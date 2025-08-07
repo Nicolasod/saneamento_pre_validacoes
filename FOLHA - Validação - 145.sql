@@ -7,7 +7,9 @@ select i_pessoas
  order by i_pessoas;
 
 
- CORREÇÃO
+-- CORREÇÃO
+-- Atualiza a data de nascimento no histórico de pessoa física com a data de nascimento da pessoa física caso esteja nula no histórico de pessoa física
+-- Caso a data de nascimento esteja nula na pessoa física, não será atualizado no histórico de pessoa física também e permanecerá nulo no histórico de pessoa física
 
 begin	
 	declare w_i_pessoas integer;
@@ -27,7 +29,6 @@ begin
   update bethadba.hist_pessoas_fis 
 	 set dt_nascimento = w_dt_nascimento
    where dt_nascimento is null
-	 and i_pessoas = w_i_pessoas
-
+	 and i_pessoas = w_i_pessoas;
     end for;
 end;

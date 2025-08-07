@@ -8,6 +8,7 @@ select i_pessoas,
 
 
 -- CORREÇÃO
+-- Atribui o motivo '1 - Nascimento' ao dependente que não possui motivo de início
 
 update bethadba.dependentes
    set mot_ini_depende =  1

@@ -27,6 +27,7 @@ update bethadba.parametros_rel pr
    						          where i_pessoas = (select top 1 e.i_pessoas
                                    					 from bethadba.hist_entidades_compl e
 					                                  where e.i_entidades = pr.i_entidades
+                                              and i_pessoas is not null
                     					              order by i_competencias desc))
  where pr.i_parametros_rel = 2
    and ((pr.tipo_insc = 'J'
@@ -36,4 +37,4 @@ update bethadba.parametros_rel pr
     or (pr.tipo_insc = 'F'
    and isnull((select first i_pessoas
                  from bethadba.pessoas
-                where SIMILAR(nome, pr.nome_resp) >= 80),0) = 0));
+                where SIMILAR(nome, pr.nome_resp) >= 80),0) = 0));

@@ -17,7 +17,15 @@ select f.i_entidades,
    and f.conselheiro_tutelar = 'N';
 
 -- CORREÇÃO
+-- Atualizar categoria do eSocial para 701 (Contribuinte Individual) para autônomos
 
-update funcionarios
-   set conselheiro_tutelar = 'S'
- where i_funcionarios in (747,748,749,1000);
+update bethadba.vinculos v
+   set v.categoria_esocial = '701'
+ where v.i_vinculos in (select hf.i_vinculos
+                          from bethadba.funcionarios f 
+                          join bethadba.hist_funcionarios hf
+                            on f.i_entidades = hf.i_entidades
+                           and f.i_funcionarios = hf.i_funcionarios
+                         where f.tipo_func = 'A'
+                           and f.conselheiro_tutelar = 'N'
+                           and v.categoria_esocial not in ('701'));

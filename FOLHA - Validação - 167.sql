@@ -9,4 +9,9 @@ select i_pessoas,
    and certidao is null;
 
 -- CORREÇÃO
+-- Atualizar a certidão de óbito para 'N' onde ehfalecido é 'S' e certidão é nula
 
+update bethadba.pessoas_fis_obito
+   set ehfalecido = 'N'
+ where ehfalecido = 'S'
+   and certidao is null;

@@ -13,4 +13,10 @@ select pf.i_entidades,
 
 
 -- CORREÇÃO
+-- Atualizar a coluna manual para 'N' onde o tipo é diferente de 1 e i_ferias não é nulo
 
+update bethadba.periodos_ferias pf
+   set pf.manual = 'N'
+ where pf.tipo <> 1
+   and pf.manual = 'S'
+   and pf.i_ferias is not null;
