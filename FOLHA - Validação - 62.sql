@@ -4,7 +4,7 @@
 select i_entidades,
 	     i_cargos,
 	     (select nome
-	   	    from cargos
+	   	    from bethadba.cargos
 	   	   where cargos.i_entidades = hist_cargos.i_entidades
  	   	     and cargos.i_cargos = hist_cargos.i_cargos) as nome
   from bethadba.hist_cargos

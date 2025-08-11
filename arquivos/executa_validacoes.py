@@ -16,6 +16,12 @@ arquivos_sql = [f for f in os.listdir(pasta) if f.endswith('.sql')]
 nome_arquivo = f"correcao_{datetime.now().strftime('%Y%m%d_%H%M%S')}.sql"
 arquivo_saida = os.path.join(pasta_saida, nome_arquivo)
 
+print("Iniciando execução das validações...\n")
+
+total = len(arquivos_sql)
+for i, arquivo in enumerate(arquivos_sql, 1):
+    print(f"Processando ({i}/{total}): {arquivo}")
+
 with open(arquivo_saida, 'w', encoding='utf-8') as fout:
     # Comandos iniciais
     fout.write(
@@ -24,7 +30,7 @@ with open(arquivo_saida, 'w', encoding='utf-8') as fout:
         "call bethadba.pg_setoption('wait_for_COMMIT','on');\n"
         "commit;\n\n"
     )
-    for arquivo in arquivos_sql:
+    for i, arquivo in enumerate(arquivos_sql, 1):
         with open(os.path.join(pasta, arquivo), encoding='utf-8') as f:
             conteudo = f.read()
 
@@ -68,6 +74,8 @@ with open(arquivo_saida, 'w', encoding='utf-8') as fout:
         "call bethadba.pg_setoption('wait_for_COMMIT','off');\n"
         "commit;"
     )
+
+print("\nExecução das validações finalizada.")
 
 cursor.close()
 conn.close()

@@ -23,3 +23,5 @@ update bethadba.atos
                                                   from bethadba.atos b
                                                  where trim(b.num_ato) = trim(atos.num_ato)
                                                    and atos.i_tipos_atos = b.i_tipos_atos) > 1));
+
+-- Substituir o update atual pela procedure procedure_unificacao_atos.sql

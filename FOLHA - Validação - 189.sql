@@ -18,7 +18,7 @@ select niveis.i_entidades,
          where n.i_entidades = hcc.i_entidades 
            and n.i_niveis = hcc.i_niveis
            and dt_alteracao_cargos < (select min(dt_alteracoes)
-           								              from hist_niveis n2
+           								              from bethadba.hist_niveis n2
            							               where n2.i_entidades = n.i_entidades
            							   	             and n2.i_niveis = n.i_niveis)) as niveis
  where niveis.rn = 1;
