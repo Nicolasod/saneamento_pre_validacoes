@@ -1,7 +1,7 @@
 [ODBC]
 DRIVER=Adaptive Server Anywhere 9.0
-ENG=folharh_cm
-DBN=folharh_cm
+ENG=PMVargem_STeste
+DBN=Folharh
 LINKS=TCPIP(HOST=localhost;PORT=9001)
 UID=desbth
 PWD=HsV0zk3yXYACypmaRsZ1m5POCC4v2y
