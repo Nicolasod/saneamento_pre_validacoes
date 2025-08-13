@@ -9,7 +9,6 @@ select list(i_entidades) as entidades,
  group by descricao 
 having quantidade > 1;
 
-
 -- CORREÇÃO
 -- Atualiza as descrições repetidas para que sejam únicas
 

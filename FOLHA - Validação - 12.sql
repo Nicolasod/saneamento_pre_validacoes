@@ -9,7 +9,6 @@ select substring(nome, 1, 1) as nome_com_caracter,
 
 -- CORREÇÃO
 -- Retira o caracter especial do inicio da descrição dos logradouros
-
 update bethadba.ruas
    set nome = ltrim(nome, '[]')
  where substring(nome, 1, 1) in ('[', ']');

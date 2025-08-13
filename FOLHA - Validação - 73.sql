@@ -18,11 +18,11 @@ select dependentes.i_pessoas as resp,
 -- CORREÇÃO
 -- Atualiza a data de nascimento dos dependentes com grau de parentesco 3, 4 ou 12 para ser igual à do responsável se a data de nascimento do dependente for maior que a do responsável
 
-update bethadba.pessoas_fisicas
-   set dt_nascimento = p.dt_nascimento
+update bethadba.pessoas_fisicas as pdep
+  set dt_nascimento = p.dt_nascimento
   from bethadba.dependentes
   join bethadba.pessoas_fisicas as p
-    on (p.i_pessoas = dependentes.i_pessoas)
- where pessoas_fisicas.i_pessoas = dependentes.i_dependentes
-   and dependentes.grau in (3,4,12)
-   and pessoas_fisicas.dt_nascimento > p.dt_nascimento;
+   on (p.i_pessoas = dependentes.i_pessoas)
+ where pdep.i_pessoas = dependentes.i_dependentes
+  and dependentes.grau in (3,4,12)
+  and pdep.dt_nascimento > p.dt_nascimento;
