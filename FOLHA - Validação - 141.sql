@@ -16,6 +16,11 @@ select pj.i_entidades,
 -- Atualiza a data de homologação para a data atual se for maior que a data final
 
 update bethadba.processos_judiciais
-   set dt_homologacao = getDate()
- where pj.dt_homologacao > getDate() 
-    or pj.dt_homologacao > pj.dt_final;
+   set dt_homologacao = case
+                           when dt_final < getDate() then dt_final
+                           else getDate()
+                        end
+ where dt_homologacao > getDate()
+    or dt_homologacao > dt_final;
+
+commit;
