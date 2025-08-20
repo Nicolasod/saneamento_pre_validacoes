@@ -3,125 +3,6 @@ call bethadba.pg_setoption('fire_triggers','off');
 call bethadba.pg_setoption('wait_for_COMMIT','on');
 commit;
 
--- FOLHA - Validação - 1
-
--- Atualiza os nomes dos logradouros duplicados para evitar duplicidade
-
-update bethadba.ruas
-   set nome = i_ruas || '-' || nome
- where i_ruas in (select i_ruas
-                    from bethadba.ruas
-                   where (select count(1)
-                            from bethadba.ruas r
-                           where (r.i_cidades = ruas.i_cidades or r.i_cidades is null)
-                             and trim(r.nome) = trim(ruas.nome)) > 1);
-
-commit;
-
--- FOLHA - Validação - 11
-
--- Atualiza os CNPJ nulos para 0 para evitar erros de validação.
-
-update bethadba.pessoas_juridicas
-   set cnpj = right('000000000000' || cast((row_number() over (order by i_pessoas)) as varchar(12)), 12) || '91'
- where cnpj is null;
-
-commit;
-
--- FOLHA - Validação - 122
-
--- Configuração Rais sem controle de ponto
-
-update bethadba.parametros_rel
-   set sistema_ponto = 0
- where sistema_ponto is null
-   and i_parametros_rel = 2;
-
-commit;
-
--- FOLHA - Validação - 127
-
--- Atualiza os campos CNPJ que estão nulos para 0 para que não sejam considerados na validação e não gere erro de validação.
-
-update bethadba.bethadba.rais_campos
-   set CNPJ = right('000000000000' || cast((row_number() over) as varchar(12)), 12) || '91'
- where CNPJ is null;
-
-commit;
-
--- FOLHA - Validação - 13
-
--- Atualiza os nomes dos bairros repetidos para evitar duplicidade
-
-update bethadba.bairros
-   set bairros.nome = bairros.nome || ' - (Cod: ' || i_bairros  || ')'
- where bairros.i_bairros in (select codigo
-				   		       from (select max(i_bairros) as codigo,
-							   				nome
-      				  				   from bethadba.bairros
-      				  				  where (select count(i_bairros)
-	   		 		 						   from bethadba.bairros as b
-       		 			 					  where trim(b.nome) = trim(bairros.nome)) > 1
-       		 		  	 	  		  group by nome) as maior);
-
-commit;
-
--- FOLHA - Validação - 141
-
--- Atualiza a data de homologação para a data atual se for maior que a data final
-
-update bethadba.processos_judiciais
-   set dt_homologacao = getDate()
- where pj.dt_homologacao > getDate() 
-    or pj.dt_homologacao > pj.dt_final;
-
-commit;
-
--- FOLHA - Validação - 147
-
--- Verificar se o funcionário realmente não possui movimentações no período.
-
-begin
-  -- Caso positivo, excluir o registro da tabela dados_calc.
-  delete
-    from bethadba.dados_calc
-  where dados_calc.i_tipos_proc in (11, 41, 42)
-    and dados_calc.dt_fechamento is not null
-    and not exists (select 1
-                      from bethadba.movimentos as m 
-                      where m.i_funcionarios = dados_calc.i_funcionarios
-                        and m.i_entidades = dados_calc.i_entidades
-                        and m.i_tipos_proc = dados_calc.i_tipos_proc
-                        and m.i_processamentos = dados_calc.i_processamentos
-                        and m.i_competencias = dados_calc.i_competencias);
-
-  -- Caso positivo, excluir o registro da tabela bases_calc.
-  delete 
-    from bethadba.bases_calc
-   where bases_calc.i_tipos_proc in (11, 41, 42)
-     and not exists (select 1
-                       from bethadba.movimentos as m 
-                       where m.i_funcionarios = bases_calc.i_funcionarios
-                         and m.i_entidades = bases_calc.i_entidades
-                         and m.i_tipos_proc = bases_calc.i_tipos_proc
-                         and m.i_processamentos = bases_calc.i_processamentos
-                         and m.i_competencias = bases_calc.i_competencias);
-
-  -- Caso positivo, excluir o registro da tabela periodos_calculo_fecha.
-  delete 
-    from bethadba.periodos_calculo_fecha
-   where periodos_calculo_fecha.i_tipos_proc in (11, 41, 42)
-     and not exists (select 1
-                       from bethadba.movimentos as m 
-                      where m.i_funcionarios = periodos_calculo_fecha.i_funcionarios
-                        and m.i_entidades = periodos_calculo_fecha.i_entidades
-                        and m.i_tipos_proc = periodos_calculo_fecha.i_tipos_proc
-                        and m.i_processamentos = periodos_calculo_fecha.i_processamentos
-                        and m.i_competencias = periodos_calculo_fecha.i_competencias);
-end;
-
-commit;
-
 -- FOLHA - Validação - 153
 
 -- Atualizar a lotação fisica principal 'S' para apenas uma por funcionário, setando as demais para 'N' considerando como principal a lotação física com data inicial menor e sem data final
@@ -130,28 +11,32 @@ commit;
 update bethadba.locais_mov lm1
    set principal = 'S'
  where principal = 'N'
-   and not exists (select 1
-                     from bethadba.locais_mov lm2 
-                    where lm2.i_entidades = lm1.i_entidades
-                      and lm2.i_funcionarios = lm1.i_funcionarios
-                      and lm2.principal = 'S'
-                      and (lm2.data_inicial < lm1.data_inicial 
-                       or (lm2.data_inicial = lm1.data_inicial 
-                      and (lm2.data_final is null
-                       or lm2.data_final > lm1.data_final))));
+   and not exists (
+       select 1
+         from bethadba.locais_mov lm2
+        where lm2.i_entidades = lm1.i_entidades
+          and lm2.i_funcionarios = lm1.i_funcionarios
+          and lm2.principal = 'S'
+          and (lm2.dt_inicial < lm1.dt_inicial
+            or (lm2.dt_inicial = lm1.dt_inicial
+            and (lm2.dt_final is null
+             or lm2.dt_final > lm1.dt_final)))
+   );
 
 update bethadba.locais_mov lm
    set principal = 'N'
  where principal = 'S'
-   and exists (select 1
-                 from bethadba.locais_mov lm2 
-                where lm2.i_entidades = lm.i_entidades
-                  and lm2.i_funcionarios = lm.i_funcionarios
-                  and lm2.principal = 'S'
-                  and (lm2.data_inicial < lm.data_inicial 
-                   or (lm2.data_inicial = lm.data_inicial 
-                  and (lm2.data_final is null
-                   or lm2.data_final > lm.data_final))));
+   and exists (
+       select 1
+         from bethadba.locais_mov lm2
+        where lm2.i_entidades = lm.i_entidades
+          and lm2.i_funcionarios = lm.i_funcionarios
+          and lm2.principal = 'S'
+          and (lm2.dt_inicial < lm.dt_inicial
+            or (lm2.dt_inicial = lm.dt_inicial
+            and (lm2.dt_final is null
+             or lm2.dt_final > lm.dt_final)))
+   );
 
 commit;
 
@@ -263,99 +148,6 @@ begin
 
     end for;
 end;
-
-commit;
-
--- FOLHA - Validação - 172
-
--- Atualizar o afastamento com a data da rescisão se não houver afastamento, criar um novo com a data da rescisão
-
-update bethadba.rescisoes
-   set dt_rescisao = a.dt_afastamento
-  from bethadba.afastamentos a
-  join bethadba.tipos_afast ta
-    on a.i_tipos_afast = ta.i_tipos_afast
- where ((ta.classif = 8 and rescisoes.i_motivos_apos is null)
-    or (ta.classif = 9 and rescisoes.i_motivos_apos is not null)
-    or (ta.classif = 8 and rescisoes.i_motivos_apos is not null))
-   and rescisoes.i_entidades = a.i_entidades
-   and rescisoes.i_funcionarios = a.i_funcionarios
-   and rescisoes.dt_rescisao <> a.dt_afastamento;
-
-
--- Se não houver afastamento, criar um novo afastamento com a data da rescisão.
-insert into bethadba.afastamentos(
-       i_entidades,
-       i_funcionarios,
-       dt_afastamento,
-       i_tipos_afast,
-       i_atos,
-       dt_ultimo_dia,
-       req_benef,
-       comp_comunic,
-       observacao,
-       manual,
-       sequencial,
-       dt_afastamento_origem,
-       desconsidera_rotina_prorrogacao,
-       desconsidera_rotina_rodada,
-       parecer_interno,
-       conversao_fim_mp_664_2014,
-       i_cid,
-       i_medico_emitente,
-       orgao_classe,
-       nr_conselho,
-       i_estados_orgao,
-       acidente_transito,
-       retificacao,
-       dt_afastamento_retificacao,
-       dt_retificacao,
-       i_tipos_afast_antes,
-       dt_afastamento_geracao,
-       i_tipos_afast_geracao,
-       origem_retificacao,
-       tipo_processo,
-       numero_processo)
-select r.i_entidades,
-       r.i_funcionarios,
-       r.dt_rescisao,
-       ta.i_tipos_afast,
-       null,    -- i_atos
-       null,    -- dt_ultimo_dia
-       null,    -- req_benef
-       null,    -- comp_comunic
-       null,    -- observacao
-       'S',     -- manual
-       null,    -- sequencial
-       null,    -- dt_afastamento_origem
-       'N',     -- desconsidera_rotina_prorrogacao
-       'N',     -- desconsidera_rotina_rodada
-       'N',     -- parecer_interno
-       'N',     -- conversao_fim_mp_664_2014
-       null,    -- i_cid
-       null,    -- i_medico_emitente
-       null,    -- orgao_classe
-       null,    -- nr_conselho
-       null,    -- i_estados_orgao
-       null,    -- acidente_transito
-       'N',     -- retificacao
-       null,    -- dt_afastamento_retificacao
-       null,    -- dt_retificacao
-       null,    -- i_tipos_afast_antes
-       null,    -- dt_afastamento_geracao
-       null,    -- i_tipos_afast_geracao
-       null,    -- origem_retificacao
-       null,    -- tipo_processo
-       null     -- numero_processo
-  from bethadba.rescisoes r
-  join bethadba.tipos_afast ta
-    on (ta.classif = 8 or ta.classif = 9)
- where not exists (select 1
-                     from bethadba.afastamentos a
-                    where a.i_entidades = r.i_entidades
-                      and a.i_funcionarios = r.i_funcionarios
-                      and a.dt_afastamento = r.dt_rescisao
-                      and a.i_tipos_afast = ta.i_tipos_afast);
 
 commit;
 
@@ -916,68 +708,30 @@ update bethadba.grupos g
 
 commit;
 
--- FOLHA - Validação - 6
+-- FOLHA - Validação - 82
 
--- Atualiza a data de início da dependência para ser igual à data de nascimento do dependente se a data de nascimento for maior que a data de início da dependência
-                
-update bethadba.dependentes a 
-  join bethadba.pessoas_fisicas b
-    on (a.i_dependentes = b.i_pessoas)
-   set a.dt_ini_depende = b.dt_nascimento
- where b.dt_nascimento > dt_ini_depende;
+-- Atualiza o CNPJ inválido para um CNPJ válido fictício
 
-commit;
-
--- FOLHA - Validação - 72
-
--- Atualiza a data fim para nulo quando a data início for maior que a data fim
-
-update bethadba.locais_mov 
-   set dt_final = null
- where dt_inicial > dt_final;
+update bethadba.pessoas_juridicas
+   set cnpj = right('000000000000' || cast((row_number() over (order by i_pessoas)) as varchar(12)), 12) || '91'
+ where cnpj is not null
+   and bethadba.dbf_valida_cgc_cpf(cnpj, null, 'J') = 0;
 
 commit;
 
--- FOLHA - Validação - 8
+-- FOLHA - Validação - 91
 
--- Atualiza os CPF's repetidos para nulo, mantendo apenas o maior i_pessoas
+-- Atualiza o campo principal para 'N' para todos os locais de trabalho dos funcionarios e depois atualiza para 'S' apenas o local de trabalho com a maior data de início
 
-update bethadba.pessoas_fisicas
-   set cpf = null
- where i_pessoas in (select maior.numPessoa
- 					   from (select max(i_pessoas) as numPessoa,
- 					   			    cpf
-          					   from bethadba.pessoas_fisicas
-          					  where (select count(1)
-        					  		   from bethadba.pessoas_fisicas as pf
-        					  		  where pf.cpf = pessoas_fisicas.cpf) > 1
-							  group by cpf) as maior);
+update bethadba.locais_mov
+   set principal = 'N';
 
-commit;
-
--- FOLHA - Validação - 88
-
--- Atualiza a data de início de dependência para ser igual à data de nascimento do dependente se a data de início de dependência for menor que a data de nascimento
-
-update bethadba.dependentes
-   set dt_ini_depende = dt_nascimento
-  from bethadba.dependentes d,
-       bethadba.pessoas_fisicas pf
- where d.i_dependentes = pf.i_pessoas
-   and d.dt_ini_depende < pf.dt_nascimento;
-
-commit;
-
--- FOLHA - Validação - 89
-
--- Atualiza a data de casamento dos dependentes para nulo se a data de casamento for menor que a data de nascimento do dependente
-
-update bethadba.dependentes
-   set dt_casamento = null
-  from bethadba.dependentes d,
-       bethadba.pessoas_fisicas pf
- where d.i_dependentes = pf.i_pessoas
-   and d.dt_casamento < pf.dt_nascimento;
+update bethadba.locais_mov
+   set principal = 'S'
+ where dt_inicial = (select max(lm.dt_inicial)
+                       from bethadba.locais_mov as lm
+                      where lm.i_funcionarios = i_funcionarios
+                        and lm.i_entidades = i_entidades);
 
 commit;
 

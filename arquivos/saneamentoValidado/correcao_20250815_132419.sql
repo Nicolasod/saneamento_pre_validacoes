@@ -3,71 +3,6 @@ call bethadba.pg_setoption('fire_triggers','off');
 call bethadba.pg_setoption('wait_for_COMMIT','on');
 commit;
 
--- FOLHA - Validação - 11
-
--- Atualiza os CNPJ nulos para 0 para evitar erros de validação.
-
- -- Cria tabela temporária com os CNPJs gerados
-create local temporary table tmp_cnpj (i_pessoas integer, novo_cnpj varchar(14));
-
-insert into tmp_cnpj (i_pessoas, novo_cnpj)
-select i_pessoas,
-       right('000000000000' || cast(row_num as varchar(12)), 12) || '91'
-  from (
-    select i_pessoas, row_number() over (order by i_pessoas) as row_num
-      from bethadba.pessoas_juridicas
-     where cnpj is null
-  ) as t;
-
--- Atualiza os registros usando a tabela temporária
-update bethadba.pessoas_juridicas pj
-   set cnpj = tmp.novo_cnpj
-  from tmp_cnpj tmp
- where pj.i_pessoas = tmp.i_pessoas
-   and pj.cnpj is null;
-
-drop table tmp_cnpj;
-commit;
-
-commit;
-
--- FOLHA - Validação - 153
-
--- Atualizar a lotação fisica principal 'S' para apenas uma por funcionário, setando as demais para 'N' considerando como principal a lotação física com data inicial menor e sem data final
--- ou com data final maior que as demais.
-
-update bethadba.locais_mov lm1
-   set principal = 'S'
- where principal = 'N'
-   and not exists (
-       select 1
-         from bethadba.locais_mov lm2
-        where lm2.i_entidades = lm1.i_entidades
-          and lm2.i_funcionarios = lm1.i_funcionarios
-          and lm2.principal = 'S'
-          and (lm2.dt_inicial < lm1.dt_inicial
-            or (lm2.dt_inicial = lm1.dt_inicial
-            and (lm2.dt_final is null
-             or lm2.dt_final > lm1.dt_final)))
-   );
-
-update bethadba.locais_mov lm
-   set principal = 'N'
- where principal = 'S'
-   and exists (
-       select 1
-         from bethadba.locais_mov lm2
-        where lm2.i_entidades = lm.i_entidades
-          and lm2.i_funcionarios = lm.i_funcionarios
-          and lm2.principal = 'S'
-          and (lm2.dt_inicial < lm.dt_inicial
-            or (lm2.dt_inicial = lm.dt_inicial
-            and (lm2.dt_final is null
-             or lm2.dt_final > lm.dt_final)))
-   );
-
-commit;
-
 -- FOLHA - Validação - 156
 
 -- Deletar duplicidade de dependentes com mais de uma configuração de IRRF quando o dependente for o mesmo
@@ -730,19 +665,37 @@ update bethadba.cargos_compl
 
 commit;
 
--- FOLHA - Validação - 91
+-- FOLHA - Validação - 82
 
--- Atualiza o campo principal para 'N' para todos os locais de trabalho dos funcionarios e depois atualiza para 'S' apenas o local de trabalho com a maior data de início
+-- Atualiza o CNPJ inválido para um CNPJ válido fictício
 
-update bethadba.locais_mov
-   set principal = 'N';
+update bethadba.pessoas_juridicas
+   set cnpj = right('000000000000' || cast((row_number() over (order by i_pessoas)) as varchar(12)), 12) || '91'
+ where cnpj is not null
+   and bethadba.dbf_valida_cgc_cpf(cnpj, null, 'J') = 0;
+
+commit;
+
+-- FOLHA - Validação - 92
+
+-- Atualiza o local de trabalho principal para os funcionarios que não possuem um definido
+-- Atribui o local de trabalho com maior i_locais_trab como principal
 
 update bethadba.locais_mov
    set principal = 'S'
- where dt_inicial = (select max(lm.dt_inicial)
-                       from bethadba.locais_mov as lm
-                      where lm.i_funcionarios = i_funcionarios
-                        and lm.i_entidades = i_entidades);
+ where i_funcionarios = i_funcionarios 
+   and i_entidades = i_entidades
+   and principal = 'N'
+   and i_locais_trab = (select max(i_locais_trab)
+                          from bethadba.locais_mov lm
+                         where lm.i_funcionarios = locais_mov.i_funcionarios 
+                           and lm.i_entidades = locais_mov.i_entidades
+                           and lm.principal = 'N')
+   and i_funcionarios not in (select lm.i_funcionarios      
+                                from bethadba.locais_mov lm
+                               where lm.i_funcionarios = locais_mov.i_funcionarios 
+                                 and lm.i_entidades = locais_mov.i_entidades
+                                 and lm.principal = 'S');
 
 commit;
 

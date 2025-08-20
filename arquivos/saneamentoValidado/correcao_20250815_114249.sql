@@ -3,48 +3,6 @@ call bethadba.pg_setoption('fire_triggers','off');
 call bethadba.pg_setoption('wait_for_COMMIT','on');
 commit;
 
--- FOLHA - Validação - 11
-
--- Atualiza os CNPJ nulos para 0 para evitar erros de validação.
-
-update bethadba.pessoas_juridicas
-   set cnpj = right('000000000000' || cast((row_number() over (order by i_pessoas)) as varchar(12)), 12) || '91'
- where cnpj is null;
-
-commit;
-
--- FOLHA - Validação - 122
-
--- Configuração Rais sem controle de ponto
-
-update bethadba.parametros_rel
-   set sistema_ponto = 0
- where sistema_ponto is null
-   and i_parametros_rel = 2;
-
-commit;
-
--- FOLHA - Validação - 127
-
--- Atualiza os campos CNPJ que estão nulos para 0 para que não sejam considerados na validação e não gere erro de validação.
-
-update bethadba.bethadba.rais_campos
-   set CNPJ = right('000000000000' || cast((row_number() over) as varchar(12)), 12) || '91'
- where CNPJ is null;
-
-commit;
-
--- FOLHA - Validação - 141
-
--- Atualiza a data de homologação para a data atual se for maior que a data final
-
-update bethadba.processos_judiciais
-   set dt_homologacao = getDate()
- where pj.dt_homologacao > getDate() 
-    or pj.dt_homologacao > pj.dt_final;
-
-commit;
-
 -- FOLHA - Validação - 153
 
 -- Atualizar a lotação fisica principal 'S' para apenas uma por funcionário, setando as demais para 'N' considerando como principal a lotação física com data inicial menor e sem data final
@@ -53,28 +11,32 @@ commit;
 update bethadba.locais_mov lm1
    set principal = 'S'
  where principal = 'N'
-   and not exists (select 1
-                     from bethadba.locais_mov lm2 
-                    where lm2.i_entidades = lm1.i_entidades
-                      and lm2.i_funcionarios = lm1.i_funcionarios
-                      and lm2.principal = 'S'
-                      and (lm2.data_inicial < lm1.data_inicial 
-                       or (lm2.data_inicial = lm1.data_inicial 
-                      and (lm2.data_final is null
-                       or lm2.data_final > lm1.data_final))));
+   and not exists (
+       select 1
+         from bethadba.locais_mov lm2
+        where lm2.i_entidades = lm1.i_entidades
+          and lm2.i_funcionarios = lm1.i_funcionarios
+          and lm2.principal = 'S'
+          and (lm2.dt_inicial < lm1.dt_inicial
+            or (lm2.dt_inicial = lm1.dt_inicial
+            and (lm2.dt_final is null
+             or lm2.dt_final > lm1.dt_final)))
+   );
 
 update bethadba.locais_mov lm
    set principal = 'N'
  where principal = 'S'
-   and exists (select 1
-                 from bethadba.locais_mov lm2 
-                where lm2.i_entidades = lm.i_entidades
-                  and lm2.i_funcionarios = lm.i_funcionarios
-                  and lm2.principal = 'S'
-                  and (lm2.data_inicial < lm.data_inicial 
-                   or (lm2.data_inicial = lm.data_inicial 
-                  and (lm2.data_final is null
-                   or lm2.data_final > lm.data_final))));
+   and exists (
+       select 1
+         from bethadba.locais_mov lm2
+        where lm2.i_entidades = lm.i_entidades
+          and lm2.i_funcionarios = lm.i_funcionarios
+          and lm2.principal = 'S'
+          and (lm2.dt_inicial < lm.dt_inicial
+            or (lm2.dt_inicial = lm.dt_inicial
+            and (lm2.dt_final is null
+             or lm2.dt_final > lm.dt_final)))
+   );
 
 commit;
 
@@ -743,6 +705,33 @@ update bethadba.grupos g
                   from bethadba.grupos
                  group by nome
                 having count(nome) > 1);
+
+commit;
+
+-- FOLHA - Validação - 82
+
+-- Atualiza o CNPJ inválido para um CNPJ válido fictício
+
+update bethadba.pessoas_juridicas
+   set cnpj = right('000000000000' || cast((row_number() over (order by i_pessoas)) as varchar(12)), 12) || '91'
+ where cnpj is not null
+   and bethadba.dbf_valida_cgc_cpf(cnpj, null, 'J') = 0;
+
+commit;
+
+-- FOLHA - Validação - 91
+
+-- Atualiza o campo principal para 'N' para todos os locais de trabalho dos funcionarios e depois atualiza para 'S' apenas o local de trabalho com a maior data de início
+
+update bethadba.locais_mov
+   set principal = 'N';
+
+update bethadba.locais_mov
+   set principal = 'S'
+ where dt_inicial = (select max(lm.dt_inicial)
+                       from bethadba.locais_mov as lm
+                      where lm.i_funcionarios = i_funcionarios
+                        and lm.i_entidades = i_entidades);
 
 commit;
 
